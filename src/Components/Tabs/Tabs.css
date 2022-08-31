@@ -1,0 +1,104 @@
+:root {
+  --border-style: solid;
+  --border-rad: 10px;
+}
+
+.Tabs {
+  border-bottom: 2px var(--border-style);
+  padding-top: 5px;
+  background: #999;
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+.Tab {
+  padding-inline: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  max-width: 150px;
+  flex-grow: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.Tab:not([ractive], [active]):after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: 4px;
+  display: inline-block;
+  height: calc(100% - var(--border-rad) - 2px);
+  width: 1px;
+  border-right: 1px solid black;
+}
+.Tab:hover:not([active]) {
+  border: 1px var(--border-style);
+  border-radius: var(--border-rad) var(--border-rad) 0 0;
+  border-bottom-color: transparent;
+  background: #777;
+  padding-top: 2px;
+  padding-inline: 9px;
+  bottom: -1px;
+}
+.Tab:hover:not([active]) code {
+  margin-inline: 1px;
+  background: #777;
+}
+.Tab:hover:not([active])[lactive] {
+  border-left-color: transparent;
+}
+.Tab:hover:not([active])[ractive] {
+  border-right-color: transparent;
+}
+.Tab[active] {
+  border: 2px var(--border-style);
+  border-radius: var(--border-rad) var(--border-rad) 0 0;
+  border-bottom-color: #999;
+  padding-top: 0px;
+  padding-inline: 8px;
+  bottom: -2px;
+  cursor: default;
+}
+.Tab[active] code {
+  margin-inline: 0px;
+}
+.Tab code {
+  position: absolute;
+  right: 3.3333333333px;
+  color: #222;
+  margin-inline: 2px;
+  padding-inline: 4px;
+  margin-top: 2px;
+  clip-path: circle();
+  cursor: pointer;
+  background: #999;
+}
+.Tab code:hover {
+  background: #555 !important;
+}
+
+.plus {
+  margin-top: 4px;
+  margin-inline: 6.6666666667px;
+  border-width: 0;
+  clip-path: circle();
+  background: #999;
+}
+.plus:hover {
+  background: #555;
+}
+
+.Tabs--Container {
+  background: #999;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=Tabs.css.map */

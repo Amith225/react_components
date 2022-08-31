@@ -1,0 +1,131 @@
+$border-width: 2px;
+$tab-pad: 10px;
+$tab-pad-bt: 2 * $border-width;
+$tab-pad-bb: 2 * $border-width;
+$tabs-mar: 5px;
+$tabs-col: #999;
+$tabs-colX: #777;
+$tabs-colXX: #555;
+$code-col: #222;
+$border-col: black;
+$tab-max-width: 150px;
+$code-mar: $tab-pad-bt / 2;
+:root {
+  --border-style: solid;
+  --border-rad: 10px;
+}
+
+.Tabs {
+  border-bottom: $border-width var(--border-style);
+  padding-top: $tabs-mar;
+  background: $tabs-col;
+  display: flex;
+  flex-direction: row;
+
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+.Tab {
+  padding-inline: $tab-pad;
+  padding-top: $tab-pad-bt;
+  padding-bottom: $tab-pad-bb;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+
+  max-width: $tab-max-width;
+  flex-grow: 1;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  &:not([ractive], [active]):after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    bottom: $tab-pad-bb;
+    display: inline-block;
+    height: calc(100% - var(--border-rad) - #{$border-width});
+    width: 1px;
+    border-right: 1px solid $border-col;
+  }
+
+  &:hover:not([active]) {
+    border: $border-width / 2 var(--border-style);
+    border-radius: var(--border-rad) var(--border-rad) 0 0;
+    border-bottom-color: transparent;
+    background: $tabs-colX;
+    padding-top: $tab-pad-bt - $border-width;
+    padding-inline: $tab-pad - $border-width / 2;
+    bottom: -$border-width / 2;
+
+    code {
+      margin-inline: $code-mar - $border-width / 2;
+      background: $tabs-colX;
+    }
+
+    &[lactive] {
+      border-left-color: transparent;
+    }
+
+    &[ractive] {
+      border-right-color: transparent;
+    }
+  }
+
+  &[active] {
+    border: $border-width var(--border-style);
+    border-radius: var(--border-rad) var(--border-rad) 0 0;
+    border-bottom-color: $tabs-col;
+    padding-top: $tab-pad-bt - 2 * $border-width;
+    padding-inline: $tab-pad - $border-width;
+    bottom: -$border-width;
+    cursor: default;
+
+    code {
+      margin-inline: $code-mar - $border-width;
+    }
+  }
+
+  code {
+    position: absolute;
+    right: $tab-pad / 3;
+    color: $code-col;
+    margin-inline: $code-mar;
+    padding-inline: 4px;
+    margin-top: $border-width;
+    clip-path: circle();
+    cursor: pointer;
+    background: $tabs-col;
+
+    &:hover {
+      background: $tabs-colXX !important;
+    }
+  }
+}
+
+.plus {
+  margin-top: $border-width * 2;
+  margin-inline: $tab-pad * 2 / 3;
+  border-width: 0;
+  clip-path: circle();
+  background: $tabs-col;
+
+  &:hover {
+    background: $tabs-colXX;
+  }
+}
+
+.Tabs--Container {
+  background: $tabs-col;
+  overflow: hidden;
+}
+
+.TabPage {
+
+}
