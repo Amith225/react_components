@@ -5,7 +5,8 @@ import LInp from "./Components/LInp/LInp";
 
 function CompRep({label, children}) {
     return (
-        <div style={{margin: "10px"}}>
+        <div style={{padding: "10px"}}>
+            <hr/>
             <p>{label}</p>
             {children}
             <hr/>
@@ -13,17 +14,18 @@ function CompRep({label, children}) {
     );
 }
 
-function Foo() {
+function FooLInp() {
     return (
-        <CompRep label="LInp">
-            <LInp type="number" labelMap={val => `Number : ${val}`}/><br/>
-            {/*<LInp type="range" min={0} max={28 * 2 + 1} value={0}*/}
-            {/*      labelMap={val => `Range : ${String.fromCharCode(65 + val)} `}/><br/>*/}
-            {/*<LInp type="number" labelMap={val => `Square(${val}) = ${val ** 2}`}/><br/>*/}
-            {/*<LInp type="text" labelMap={val => `Text : ${val}`}/><br/>*/}
-            {/*<LInp type="number" min={1} max={100} labelMap={() => "Number(1, 100) : "}/><br/>*/}
-            {/*<LInp type="textBox" labelMap={() => "TextBox : "}/><br/>*/}
-        </CompRep>
+        <>
+            <LInp type="number" labelMap={val => <span>Number : {val}</span>}/><br/>
+            <LInp type="range" min={0} max={28 * 2 + 1} value={0}
+                  labelMap={val => <span>Range : {String.fromCharCode(65 + val)}</span>}/><br/>
+            <LInp type="number" labelMap={val => <span>Square({val}) = {val ** 2}</span>}/><br/>
+            <LInp type="text" labelMap={val => <span>Text : {val}</span>}/><br/>
+            <LInp type="number" labelProps={{style: {display: 'initial'}}} min={1} max={100}
+                  labelMap={() => <span>Number(1, 100) : </span>}/><br/>
+            <LInp type="textBox" labelMap={() => <span>TextBox : </span>}/><br/>
+        </>
     );
 }
 
@@ -33,12 +35,12 @@ function App() {
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
             </header>
-            <hr/>
             <CompRep label="Tabs">
-                <Tabs newTabPage={undefined}/>
+                <Tabs/>
             </CompRep>
-            <Foo/>
-            <Foo/>
+            <CompRep label="LInp">
+                <FooLInp/>
+            </CompRep>
         </div>
     );
 }

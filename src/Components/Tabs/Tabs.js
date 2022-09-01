@@ -1,5 +1,5 @@
 import './Tabs.css';
-import {Component, createElement} from "react";
+import {Component} from "react";
 
 // function Vr({height}) {
 //     return (
@@ -57,8 +57,7 @@ export default class Tabs extends Component {
     }
 
     onNewTabClick = () => {
-        let Page = this.props.newTabPage;
-        this.state.tabPages.push(<Page uid={this.uid++}/>);
+        this.state.tabPages.push(<this.props.newTabPage uid={this.uid++}/>);
         this.onTabClick(this.state.tabPages.length - 1);
     }
 
@@ -68,10 +67,12 @@ export default class Tabs extends Component {
             <Tab active={this.state.activeTab === tab_n}
                  lActive={this.state.activeTab === tab_n - 1}
                  rActive={this.state.activeTab === tab_n + 1}
-                 i={tab_n} key={tab_n++} onTabClick={this.onTabClick} onXClick={this.onXClick}>
+                 i={tab_n} key={this.state.tabPages[tab_n++].props.uid}
+                 onTabClick={this.onTabClick} onXClick={this.onXClick}>
                 Tab:{tab_n + 1}
             </Tab>
         );
+        tab_n = 0;
         return (
             <div className="Tabs--Container">
                 <div className="Tabs">
@@ -80,7 +81,9 @@ export default class Tabs extends Component {
                     <button className="plus" onClick={this.onNewTabClick}>+</button>
                 </div>
                 <div className="TabPage">
-                    {this.state.tabPages[this.state.activeTab]}
+                    {this.state.tabPages.map((page) =>
+                            <div key={page.props.uid}
+                                 style={{display: tab_n++ !== this.state.activeTab ? 'none' : 'initial'}}>{page}</div>)}
                 </div>
             </div>
         );
