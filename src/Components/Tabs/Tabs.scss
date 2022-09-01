@@ -9,6 +9,7 @@ $tabs-colXX: #555;
 $code-col: #222;
 $border-col: black;
 $tab-max-width: 150px;
+$tab-min-width: 60px;
 $code-mar: $tab-pad-bt / 2;
 :root {
   --border-style: solid;
@@ -33,16 +34,25 @@ $code-mar: $tab-pad-bt / 2;
   padding-inline: $tab-pad;
   padding-top: $tab-pad-bt;
   padding-bottom: $tab-pad-bb;
-  display: inline-block;
+  display: inline-flex;
   cursor: pointer;
   position: relative;
 
   max-width: $tab-max-width;
+  min-width: $tab-min-width;
   flex-grow: 1;
 
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: $tab-min-width;
+    display: inline-block;
+  }
 
   &:not([ractive], [active]):after {
     content: "";

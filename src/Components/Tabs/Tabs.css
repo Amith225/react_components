@@ -20,14 +20,22 @@
   padding-inline: 10px;
   padding-top: 4px;
   padding-bottom: 4px;
-  display: inline-block;
+  display: inline-flex;
   cursor: pointer;
   position: relative;
   max-width: 150px;
+  min-width: 60px;
   flex-grow: 1;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.Tab span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 60px;
+  display: inline-block;
 }
 .Tab:not([ractive], [active]):after {
   content: "";

@@ -9,6 +9,8 @@ import {Component} from "react";
 //     );
 // }
 
+const domId = (id) => document.getElementById(id);
+
 function DefaultNewTabPage({uid}) {
     return (
         <section style={{"margin": "10px"}}>
@@ -29,6 +31,7 @@ function Tab({active, lActive, rActive, onTabClick, i, onXClick, children}) {
 }
 
 export default class Tabs extends Component {
+    prefix = "TabsUIdPrefix--some-string-to-make-this-difficult-to-clash-with-user-defined-id";
     static defaultProps = {
         newTabPage: DefaultNewTabPage,
         tabPages: [],
@@ -69,16 +72,22 @@ export default class Tabs extends Component {
                  rActive={this.state.activeTab === tab_n + 1}
                  i={tab_n} key={this.state.tabPages[tab_n++].props.uid}
                  onTabClick={this.onTabClick} onXClick={this.onXClick}>
-                Tab:{tab_n + 1}
+                <span>Tab:{tab_n + 1}</span>
             </Tab>
         );
         tab_n = 0;
         return (
             <div className="Tabs--Container">
-                <div className="Tabs">
-                    <span className="Tab" style={{flexGrow: 1, maxWidth: "33px"}}/>
+                <div id={this.prefix + "Tabs"} className="Tabs">
+                    <span className="Tab" style={{minWidth: "33px", maxWidth: "33px"}}/>
                     {tabs}
                     <button className="plus" onClick={this.onNewTabClick}>+</button>
+                    <button className="prev" onClick={() => domId(this.prefix + "Tabs").scrollLeft -= 10}>
+                        {"<"}
+                    </button>
+                    <button className="next" onClick={() => domId(this.prefix + "Tabs").scrollBy(1, 0)}>
+                        {">"}
+                    </button>
                 </div>
                 <div className="TabPage">
                     {this.state.tabPages.map((page) =>
