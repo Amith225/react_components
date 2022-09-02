@@ -1,112 +1,105 @@
-:root {
-  --border-style: solid;
-  --border-rad: 10px;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.Tabs {
-  border-bottom: 2px var(--border-style);
-  padding-top: 5px;
-  background: #999;
+.container {
+  background: #bfbfbf;
+}
+
+.container--tabs {
   display: flex;
-  flex-direction: row;
+  background: gray;
+  padding-top: 5px;
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
 }
-
-.Tab {
-  padding-inline: 10px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  display: inline-flex;
-  cursor: pointer;
-  position: relative;
-  max-width: 150px;
-  min-width: 60px;
-  flex-grow: 1;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.Tab span {
+.container--tabs .Tabs {
+  width: 100%;
+  display: flex;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 60px;
-  display: inline-block;
 }
-.Tab:not([ractive], [active]):after {
+.container--tabs .Tab {
+  display: inline-flex;
+  justify-content: space-between;
+  border-bottom: 2px solid black;
+  padding: 5px;
+  position: relative;
+}
+.container--tabs .Tab:not([ractive], [active], :hover, .lhover):after {
   content: "";
-  position: absolute;
-  right: -1px;
-  bottom: 4px;
   display: inline-block;
-  height: calc(100% - var(--border-rad) - 2px);
+  position: absolute;
   width: 1px;
+  height: calc(100% - 2 * 2px - 10px);
+  right: 0;
+  bottom: 6px;
   border-right: 1px solid black;
 }
-.Tab:hover:not([active]) {
-  border: 1px var(--border-style);
-  border-radius: var(--border-rad) var(--border-rad) 0 0;
+.container--tabs .Tab:hover:not([active]) {
+  border: 1px solid black;
+  border-radius: 10px 10px 0 0;
   border-bottom-color: transparent;
-  background: #777;
-  padding-top: 2px;
-  padding-inline: 9px;
+  background: #aaaaaa;
+  padding-inline: 4px;
+  padding-block: 3px;
   bottom: -1px;
 }
-.Tab:hover:not([active]) code {
-  margin-inline: 1px;
-  background: #777;
-}
-.Tab:hover:not([active])[lactive] {
+.container--tabs .Tab:hover:not([active])[lactive] {
   border-left-color: transparent;
 }
-.Tab:hover:not([active])[ractive] {
+.container--tabs .Tab:hover:not([active])[ractive] {
   border-right-color: transparent;
 }
-.Tab[active] {
-  border: 2px var(--border-style);
-  border-radius: var(--border-rad) var(--border-rad) 0 0;
-  border-bottom-color: #999;
-  padding-top: 0px;
-  padding-inline: 8px;
+.container--tabs .Tab[active] {
+  border: 2px solid black;
+  border-radius: 10px 10px 0 0;
+  border-bottom-color: transparent;
+  background: #bfbfbf;
+  padding-inline: 3px;
+  padding-block: 4px;
   bottom: -2px;
-  cursor: default;
 }
-.Tab[active] code {
-  margin-inline: 0px;
-}
-.Tab code {
-  position: absolute;
-  right: 3.3333333333px;
-  color: #222;
-  margin-inline: 2px;
+.container--tabs .Tab code {
+  position: relative;
+  top: 2.5px;
   padding-inline: 4px;
-  margin-top: 2px;
+  clip-path: circle(at 50% 10px);
+  cursor: pointer;
+}
+.container--tabs .Tab code:hover {
+  background: #cccccc;
+}
+.container--tabs .Tools {
+  min-width: fit-content;
+  padding-inline: 5px;
+  background: gray;
+  border-bottom: 2px solid black;
+}
+.container--tabs .Tools .tool {
+  position: relative;
+  top: 5px;
+  padding-inline: 4px;
   clip-path: circle();
   cursor: pointer;
-  background: #999;
+  border: 0;
+  background: gray;
 }
-.Tab code:hover {
-  background: #555 !important;
+.container--tabs .Tools .tool:hover {
+  background: #cccccc;
 }
-
-.plus {
-  margin-top: 4px;
-  margin-inline: 6.6666666667px;
-  border-width: 0;
-  clip-path: circle();
-  background: #999;
-}
-.plus:hover {
-  background: #555;
+.container--tabs .endSpan {
+  border-bottom: 2px solid black;
+  flex-grow: 1;
 }
 
-.Tabs--Container {
-  background: #999;
-  overflow: hidden;
+.container--page {
+  background: #bfbfbf;
+  padding: 5px;
 }
 
 /*# sourceMappingURL=Tabs.css.map */

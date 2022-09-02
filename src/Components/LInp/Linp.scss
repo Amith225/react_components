@@ -1,11 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 
+br {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
 .LInp {
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
+
+  input[type="range"] {
+    cursor: pointer;
+  }
 
   label {
     display: block;

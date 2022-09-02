@@ -16,7 +16,7 @@ function CompRep({label, children}) {
 
 function FooLInp() {
     return (
-        <>
+        <CompRep label="LInp">
             <LInp type="number" labelMap={val => <span>Number : {val}</span>}/><br/>
             <LInp type="range" min={0} max={28 * 2 + 1} value={0}
                   labelMap={val => <span>Range : {String.fromCharCode(65 + val)}</span>}/><br/>
@@ -25,7 +25,7 @@ function FooLInp() {
             <LInp type="number" labelProps={{style: {display: 'initial'}}} min={1} max={100}
                   labelMap={() => <span>Number(1, 100) : </span>}/><br/>
             <LInp type="textBox" labelMap={() => <span>TextBox : </span>}/><br/>
-        </>
+        </CompRep>
     );
 }
 
@@ -36,10 +36,7 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo"/>
             </header>
             <CompRep label="Tabs">
-                <Tabs/>
-            </CompRep>
-            <CompRep label="LInp">
-                <FooLInp/>
+                <Tabs newTabPage={FooLInp}/>
             </CompRep>
         </div>
     );
