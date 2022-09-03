@@ -21,7 +21,7 @@ export default class LInp extends Component {
     constructor(props) {
         super(props);
         this.state = {value: props.value};
-        this.prefix = this.prefix + uid++;
+        this.prefix += uid++;
     }
 
     onInput = (e) => {

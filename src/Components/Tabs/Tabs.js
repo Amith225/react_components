@@ -30,6 +30,8 @@ function Tab({active, lActive, rActive, onTabClick, i, onXClick, children, ...pr
     );
 }
 
+let uid = 0;
+
 export default class Tabs extends Component {
     prefix = "TabsUIdPrefix--some-string-to-make-this-difficult-to-clash-with-user-defined-id";
     tabsMinWidth = 70;
@@ -45,6 +47,7 @@ export default class Tabs extends Component {
         super(props);
         this.uid = 0;
         this.state = {tabPages: props.tabPages, activeTab: props.activeTab, resize: null};
+        this.prefix += uid++;
     }
 
     componentDidMount() {
@@ -78,6 +81,12 @@ export default class Tabs extends Component {
         }
     }
 
+    tabScroll = (dir) => {
+        let Tabs = domId(this.prefix + "Tabs");
+        let scrollTimerId = setInterval(() => Tabs.scrollBy(5 * dir, 0), 20);
+        window.addEventListener('mouseup', () => clearInterval(scrollTimerId), {once: true});
+    }
+
     render() {
         let Tabs = domId(this.prefix + "Tabs"), Tools = domId(this.prefix + "Tools");
         let cntTabs = domId(this.prefix + "container--tabs");
@@ -85,15 +94,15 @@ export default class Tabs extends Component {
         if (Tabs) {
             let n, full = cntTabs.offsetWidth - Tools.offsetWidth - this.sanityOffset;
             tabMinWidth =
-                Math.min(Math.max(full / this.state.tabPages.length | 0, this.tabsMinWidth), this.tabsMaxWidth);
+                Math.min(Math.max(full / this.state.tabPages.length, this.tabsMinWidth), this.tabsMaxWidth);
             tabsWidth =
                 Math.min(tabMinWidth * (n = full / tabMinWidth | 0), tabMinWidth * this.state.tabPages.length);
             tabsWidthRem = full - tabsWidth;
-            // if (tabMinWidth < this.tabsMaxWidth) {
-            //     tabMinWidth += tabsWidthRem / n;
-            //     tabsWidth = full;
-            //     tabsWidthRem = 0;
-            // }
+            if (n < this.state.tabPages.length) {
+                tabMinWidth += tabsWidthRem / n;
+                tabsWidth = full;
+                tabsWidthRem = 0;
+            }
         }
         let tab_n = 0;
         const tabs = this.state.tabPages.map((page) =>
@@ -122,14 +131,8 @@ export default class Tabs extends Component {
                     <span id={this.prefix + "Tabs"} className="Tabs" style={{maxWidth: tabsWidth}}>{tabs}</span>
                     <span id={this.prefix + "Tools"} className="Tools">
                         <button className="tool" onClick={this.onNewTabClick}>+</button>
-                         <button className="tool"
-                                 onClick={() => domId(this.prefix + "Tabs").scrollBy(-tabMinWidth, 0)}>
-                             {"<"}
-                         </button>
-                         <button className="tool"
-                                 onClick={() => domId(this.prefix + "Tabs").scrollBy(tabMinWidth, 0)}>
-                             {">"}
-                         </button>
+                        <button className="tool" onMouseDown={() => this.tabScroll(-1)}>{"<"}</button>
+                        <button className="tool" onMouseDown={() => this.tabScroll(+1)}>{">"}</button>
                     </span>
                     <span className="endSpan" style={{maxWidth: tabsWidthRem}}></span>
                 </div>
