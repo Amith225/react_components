@@ -9,9 +9,10 @@ export default class LInp extends Component {
     static defaultProps = {
         onInputBefore: () => null,
         onInput: () => null,
-        labelMap: () => null,
+        labelMap: () => '',
         labelProps: {},
         inputProps: {},
+        LInpProps: {},
         type: 'text',
         min: undefined,
         max: undefined,
@@ -35,15 +36,17 @@ export default class LInp extends Component {
         if (noVal) _val = this.props.value;
         if (noVal || ((this.noVals.includes(min) || min <= val) && (this.noVals.includes(max) || val <= max)))
             this.setState({value: _val});
-        e.target.value = this.state.value;
+        else _val = this.state.value;
+        e.target.value = _val;
         this.props.onInput(e);
     }
 
     render() {
         const Tag = this.props.type !== "textBox" ? "input" : "textarea";
+        const text = this.props.labelMap(this.state.value)
         return (
-            <div className="LInp">
-                <label {...this.props.labelProps} htmlFor={this.prefix}>{this.props.labelMap(this.state.value)}</label>
+            <div {...this.props.LInpProps} className="LInp">
+                <label {...this.props.labelProps} htmlFor={this.prefix}>{text}</label>
                 <Tag value={this.state.value} type={this.props.type} onInput={this.onInput} wrap="off"
                        id={this.prefix} {...this.props.inputProps} min={this.props.min} max={this.props.max}/>
             </div>

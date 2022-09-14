@@ -3,7 +3,7 @@ import {Component} from "react";
 
 // function Vr({height}) {
 //     return (
-//         <span className="Vr">
+//         <span>
 //             <span style={{borderLeft: "1px solid #000", height: height, display: "inline-block"}}/>
 //         </span>
 //     );
