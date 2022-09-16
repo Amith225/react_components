@@ -14,8 +14,12 @@ export default class PyLink extends Component {
     }
 
     async componentDidMount() {
-        this.pyLink = await window.loadPyodide();
-        // console.log(require.resolve("./pyodide.asm.js"))
+        this.pyLink = await window.loadPyodide({
+            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
+        });
+        // this.pyLink = await loadPyodide({
+        //     indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
+        // });
         // this.pyLink = await loadPyodide({
         //     indexURL: "http://localhost:3000/static/js"
         // });
