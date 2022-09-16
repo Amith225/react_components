@@ -1,6 +1,7 @@
 import "./PyLink.css";
-import "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js";
 import {Component} from "react";
+import "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js";
+// import {loadPyodide} from 'pyodide';
 
 export default class PyLink extends Component {
     static defaultProps = {
@@ -9,12 +10,16 @@ export default class PyLink extends Component {
 
     constructor(props) {
         super(props);
-        this.pyLink = window.loadPyodide();
         this.state = {doneSetup: false};
     }
 
     async componentDidMount() {
-        this.pyLink = await this.pyLink;
+        this.pyLink = await window.loadPyodide();
+        // console.log(require.resolve("./pyodide.asm.js"))
+        // this.pyLink = await loadPyodide({
+        //     indexURL: "http://localhost:3000/static/js"
+        // });
+
         await this.loadPkgs(this.props.pkgs);
         await this.loadZip(require("./src.zip"));
         await this.loadPy(require("./py_entry.py"));
@@ -26,11 +31,13 @@ export default class PyLink extends Component {
         this.pyLink.runPython(script);
     }
 
-    getFoo(foo) {
+    getFoo(foo, returnProxy = false) {
         foo = this.pyLink.runPython(foo);
 
         function wrap({args, kwargs} = {args: [], kwargs: {}}) {
-            foo.callKwargs(...args, kwargs);
+            // noinspection JSCheckFunctionSignatures
+            let rVal = foo.callKwargs(...args, kwargs);
+            console.log(rVal)
         }
 
         return wrap;
@@ -66,6 +73,18 @@ export default class PyLink extends Component {
                     }
                 )}>
                     send args and kwargs (no return) to python
+                </button>
+                <br/>
+                <button onClick={() => this.getFoo("fooWithReturn")({
+                        args: [420, 69.69, "Foo wo", true, null, undefined, NaN],
+                        kwargs: {
+                            list: [1, 1.1, "loo", false],
+                            dict: {"m1": 1, "m2": 2.2, "m3": "moo", "m4": null},
+                            num: 73,
+                        }
+                    }
+                )}>
+                    send args and kwargs (with return) to python
                 </button>
             </div>
         );
