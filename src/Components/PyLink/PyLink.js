@@ -14,34 +14,28 @@ export default class PyLink extends Component {
     }
 
     async componentDidMount() {
-        // this.pyLink = await window.loadPyodide({
-        //     indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
-        // });
-        // // this.pyLink = await loadPyodide({
-        // //     indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
-        // // });
-        // // this.pyLink = await loadPyodide({
-        // //     indexURL: "http://localhost:3000/static/js"
-        // // });
-        //
-        // await this.loadPkgs(this.props.pkgs);
-        // await this.loadZip(require("./src.zip"));
-        // await this.loadPy(require("./py_entry.py"));
-        // console.log("PyLink Setup Complete");
-        // this.setState({doneSetup: true});
+        let ts = Date.now();
+        this.pyLink = await window.loadPyodide({
+            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
+        });
+        await this.loadPkgs(this.props.pkgs);
+        await this.loadZip(require("./src.zip"));
+        await this.loadPy(require("./py_entry.py"));
+        ts = Date.now() - ts;
+        console.log("PyLink Setup Complete", ts, "ms");
+        this.setState({doneSetup: true});
     }
 
     runScript(script) {
         this.pyLink.runPython(script);
     }
 
-    getFoo(foo, returnProxy = false) {
+    getFoo(foo) {
         foo = this.pyLink.runPython(foo);
 
         function wrap({args, kwargs} = {args: [], kwargs: {}}) {
-            // noinspection JSCheckFunctionSignatures
             let rVal = foo.callKwargs(...args, kwargs);
-            console.log(rVal)
+            if (rVal) console.log(rVal)
         }
 
         return wrap;
