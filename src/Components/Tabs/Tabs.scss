@@ -107,9 +107,11 @@ $tools-pad: 5px;
       padding-inline: 5px;
       clip-path: circle();
 
-      &:hover {
-        background: $cnt-bgY;
-        color: $cnt-bgX;
+      @media (hover: hover) {
+        &:hover {
+          background: $cnt-bgY;
+          color: $cnt-bgX;
+        }
       }
     }
   }
@@ -125,9 +127,11 @@ $tools-pad: 5px;
     background: transparent;
     border: 0;
 
-    &:not([disable="1"]):hover {
-      background: $cnt-bgY;
-      color: $cnt-bgX;
+    @media (hover: hover) {
+      &:not([disable="1"]):hover {
+        background: $cnt-bgY;
+        color: $cnt-bgX;
+      }
     }
   }
 }

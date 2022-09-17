@@ -90,9 +90,11 @@
   padding-inline: 5px;
   clip-path: circle();
 }
-.Tabs .Tab code:hover {
-  background: #555555;
-  color: #aaaaaa;
+@media (hover: hover) {
+  .Tabs .Tab code:hover {
+    background: #555555;
+    color: #aaaaaa;
+  }
 }
 
 .Tools {
@@ -105,9 +107,11 @@
   background: transparent;
   border: 0;
 }
-.Tools .tool:not([disable="1"]):hover {
-  background: #555555;
-  color: #aaaaaa;
+@media (hover: hover) {
+  .Tools .tool:not([disable="1"]):hover {
+    background: #555555;
+    color: #aaaaaa;
+  }
 }
 
 /*# sourceMappingURL=Tabs.css.map */
