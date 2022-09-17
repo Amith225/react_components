@@ -86,9 +86,9 @@ export default class Tabs extends Component {
         let TabA, TabB;
         if (dir > 0) {
             TabA = domId(this.prefix + "Tab" + this.scrollTab);
-            TabB = domId(this.prefix + "Tab" + (this.scrollTab + vis + 1));
+            TabB = domId(this.prefix + "Tab" + (this.scrollTab + vis));
         } else {
-            TabA = domId(this.prefix + "Tab" + (this.scrollTab + vis));
+            TabA = domId(this.prefix + "Tab" + (this.scrollTab + vis - 1));
             TabB = domId(this.prefix + "Tab" + (this.scrollTab - 1));
         }
         if (TabA && TabB) {
@@ -96,7 +96,6 @@ export default class Tabs extends Component {
             TabB.classList.remove("hide");
             this.scrollTab += dir;
             if (this.scrollTab < 0) this.scrollTab = 0;
-            let tab = domId(this.prefix + "Tab" + -1);
         }
     }
 
