@@ -3,107 +3,111 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
-.hide {
+*[disable="1"] {
+  pointer-events: none;
+  opacity: 0.4;
+}
+*[visible="0"] {
   display: none !important;
 }
 
 .container {
-  background: #bfbfbf;
+  background: gray;
+  padding: 5px;
 }
 
 .container--tabs {
   display: flex;
-  background: gray;
-  padding-top: 5px;
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
 }
-.container--tabs .Tabs {
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-}
-.container--tabs .Tab {
-  display: inline-flex;
-  justify-content: space-between;
-  border-bottom: 2px solid black;
-  padding: 5px;
-  position: relative;
-}
-.container--tabs .Tab:not([ractive], [active], :hover, .lhover):after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 1px;
-  height: calc(100% - 2 * 2px - 10px);
-  right: 0;
-  bottom: 6px;
-  border-right: 1px solid black;
-}
-.container--tabs .Tab:hover:not([active]) {
-  border: 1px solid black;
-  border-radius: 10px 10px 0 0;
-  border-bottom-color: transparent;
-  background: #aaaaaa;
-  padding-inline: 4px;
-  padding-block: 3px;
-  bottom: -1px;
-}
-.container--tabs .Tab:hover:not([active])[lactive] {
-  border-left-color: transparent;
-}
-.container--tabs .Tab:hover:not([active])[ractive] {
-  border-right-color: transparent;
-}
-.container--tabs .Tab[active] {
-  border: 2px solid black;
-  border-radius: 10px 10px 0 0;
-  border-bottom-color: transparent;
-  background: #bfbfbf;
-  padding-inline: 3px;
-  padding-block: 4px;
-  bottom: -2px;
-}
-.container--tabs .Tab code {
-  position: relative;
-  top: 2.5px;
-  padding-inline: 4px;
-  clip-path: circle(at 50% 10px);
-  cursor: pointer;
-}
-.container--tabs .Tab code:hover {
-  background: #cccccc;
-}
-.container--tabs .Tools {
-  min-width: fit-content;
-  padding-inline: 5px;
-  background: gray;
-  border-bottom: 2px solid black;
-}
-.container--tabs .Tools .tool {
-  position: relative;
-  top: 5px;
-  padding-inline: 4px;
-  clip-path: circle();
-  cursor: pointer;
-  border: 0;
-  background: gray;
-}
-.container--tabs .Tools .tool:hover {
-  background: #cccccc;
-}
-.container--tabs .endSpan {
-  border-bottom: 2px solid black;
-  flex-grow: 1;
-}
 
 .container--page {
   background: #bfbfbf;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}
+
+.Tabs {
+  display: flex;
+}
+.Tabs .Tab {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
   padding: 5px;
+  border-radius: 7px 7px 0 0;
+  -moz-border-radius: 7px 7px 0 0;
+  -webkit-border-radius: 7px 7px 0 0;
+}
+.Tabs .Tab[active="1"] {
+  background: #bfbfbf;
+  z-index: 1;
+}
+.Tabs .Tab[active="1"]:before, .Tabs .Tab[active="1"]:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 7px;
+  width: 14px;
+}
+.Tabs .Tab[active="1"]:after {
+  right: -14px;
+  border-radius: 0 0 0 7px;
+  -moz-border-radius: 0 0 0 7px;
+  -webkit-border-radius: 0 0 0 7px;
+  -webkit-box-shadow: -7px 0 0 0 #bfbfbf;
+  box-shadow: -7px 0 0 0 #bfbfbf;
+}
+.Tabs .Tab[active="1"]:before {
+  left: -14px;
+  border-radius: 0 0 7px 0;
+  -moz-border-radius: 0 0 7px 0;
+  -webkit-border-radius: 0 0 7px 0;
+  -webkit-box-shadow: 7px 0 0 0 #bfbfbf;
+  box-shadow: 7px 0 0 0 #bfbfbf;
+}
+.Tabs .Tab:hover:not([active="1"]) {
+  background: #aaaaaa;
+}
+.Tabs .Tab:not([active="1"], :hover):after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: 25%;
+  height: 50%;
+  width: 1px;
+  border-right: 1px black solid;
+}
+.Tabs .Tab code {
+  cursor: pointer;
+  align-self: flex-end;
+  padding-inline: 5px;
+  clip-path: circle();
+}
+.Tabs .Tab code:hover {
+  background: #555555;
+  color: #aaaaaa;
+}
+
+.Tools {
+  display: flex;
+  padding: 5px;
+}
+.Tools .tool {
+  cursor: pointer;
+  clip-path: circle();
+  background: transparent;
+  border: 0;
+}
+.Tools .tool:not([disable="1"]):hover {
+  background: #555555;
+  color: #aaaaaa;
 }
 
 /*# sourceMappingURL=Tabs.css.map */

@@ -1,132 +1,133 @@
 $cnt-bg: gray;
+$cnt-bgY: adjust-color($cnt-bg, $blackness: 50%);
 $cnt-bgX: adjust-color($cnt-bg, $whiteness: 50%);
-$cnt-bgXX: adjust-color($cnt-bgX, $whiteness: 50%);
-$cnt-bgXXX: adjust-color($cnt-bgXX, $whiteness: 50%);
+$cnt-bgXX: adjust-color($cnt-bgX, $whiteness: 75%);
 $cnt-pad: 5px;
-$tools-mar: 5px;
-$border-width: 2px;
-$border-style: solid;
-$border-col: black;
-$border-rad: 10px;
 $tab-pad: 5px;
+$tab-rad: 7px;
+$tools-pad: 5px;
 
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
 
-.hide {
-  display: none !important;
+  &[disable="1"] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &[visible="0"] {
+    display: none !important;
+  }
 }
 
 .container {
-  background: $cnt-bgXX;
+  background: $cnt-bg;
+  padding: $cnt-pad;
 }
 
 .container--tabs {
   display: flex;
-  background: $cnt-bg;
-  padding-top: $cnt-pad;
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
-
-  .Tabs {
-    width: 100%;
-    display: flex;
-    overflow: hidden;
-  }
-
-  .Tab {
-    display: inline-flex;
-    justify-content: space-between;
-    border-bottom: $border-width $border-style $border-col;
-    padding: $tab-pad;
-    position: relative;
-
-    &:not([ractive], [active], :hover, .lhover):after {
-      content: "";
-      display: inline-block;
-      position: absolute;
-      width: 1px;
-      height: calc(100% - 2 * #{$border-width} - #{$border-rad});
-      right: 0;
-      bottom: $border-width + $border-rad / 2 - 1px;
-      border-right: 1px $border-style $border-col;
-    }
-
-    &:hover:not([active]) {
-      border: $border-width / 2 $border-style $border-col;
-      border-radius: $border-rad $border-rad 0 0;
-      border-bottom-color: transparent;
-      background: $cnt-bgX;
-      padding-inline: $tab-pad - $border-width / 2;
-      padding-block: $tab-pad - $border-width;
-      bottom: -$border-width / 2;
-
-      &[lactive] {
-        border-left-color: transparent;
-      }
-
-      &[ractive] {
-        border-right-color: transparent;
-      }
-    }
-
-    &[active] {
-      border: $border-width $border-style $border-col;
-      border-radius: $border-rad $border-rad 0 0;
-      border-bottom-color: transparent;
-      background: $cnt-bgXX;
-      padding-inline: $tab-pad - $border-width;
-      padding-block: $tab-pad - $border-width / 2;
-      bottom: -$border-width;
-    }
-
-    code {
-      position: relative;
-      top: $tab-pad / 2;
-      padding-inline: 4px;
-      clip-path: circle(at 50% 2 * $tab-pad);
-      cursor: pointer;
-
-      &:hover {
-        background: $cnt-bgXXX;
-      }
-    }
-  }
-
-  .Tools {
-    min-width: fit-content;
-    padding-inline: $tools-mar;
-    background: $cnt-bg;
-    border-bottom: $border-width $border-style $border-col;
-
-    .tool {
-      position: relative;
-      top: $tab-pad;
-      padding-inline: 4px;
-      clip-path: circle();
-      cursor: pointer;
-      border: 0;
-      background: $cnt-bg;
-
-      &:hover {
-        background: $cnt-bgXXX;
-      }
-    }
-  }
-
-  .endSpan {
-    border-bottom: $border-width $border-style $border-col;
-    flex-grow: 1;
-  }
 }
 
 .container--page {
   background: $cnt-bgXX;
-  padding: $cnt-pad;
+  border-radius: $tab-rad;
+  -moz-border-radius: $tab-rad;
+  -webkit-border-radius: $tab-rad;
+}
+
+.Tabs {
+  display: flex;
+
+  .Tab {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: $tab-pad;
+    border-radius: $tab-rad $tab-rad 0 0;
+    -moz-border-radius: $tab-rad $tab-rad 0 0;
+    -webkit-border-radius: $tab-rad $tab-rad 0 0;
+
+    &[active="1"] {
+      background: $cnt-bgXX;
+      z-index: 1;
+
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: $tab-rad;
+        width: $tab-rad * 2;
+      }
+
+      &:after {
+        right: -$tab-rad * 2;
+        border-radius: 0 0 0 $tab-rad;
+        -moz-border-radius: 0 0 0 $tab-rad;
+        -webkit-border-radius: 0 0 0 $tab-rad;
+        -webkit-box-shadow: -$tab-rad 0 0 0 $cnt-bgXX;
+        box-shadow: -$tab-rad 0 0 0 $cnt-bgXX;
+      }
+
+      &:before {
+        left: -$tab-rad * 2;
+        border-radius: 0 0 $tab-rad 0;
+        -moz-border-radius: 0 0 $tab-rad 0;
+        -webkit-border-radius: 0 0 $tab-rad 0;
+        -webkit-box-shadow: $tab-rad 0 0 0 $cnt-bgXX;
+        box-shadow: $tab-rad 0 0 0 $cnt-bgXX;
+      }
+    }
+
+    &:hover:not([active="1"]) {
+      background: $cnt-bgX;
+    }
+
+    &:not([active="1"], :hover):after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      bottom: 25%;
+      height: 50%;
+      width: 1px;
+      border-right: 1px black solid;
+    }
+
+    code {
+      cursor: pointer;
+      align-self: flex-end;
+      padding-inline: 5px;
+      clip-path: circle();
+
+      &:hover {
+        background: $cnt-bgY;
+        color: $cnt-bgX;
+      }
+    }
+  }
+}
+
+.Tools {
+  display: flex;
+  padding: $tools-pad;
+
+  .tool {
+    cursor: pointer;
+    clip-path: circle();
+    background: transparent;
+    border: 0;
+
+    &:not([disable="1"]):hover {
+      background: $cnt-bgY;
+      color: $cnt-bgX;
+    }
+  }
 }
