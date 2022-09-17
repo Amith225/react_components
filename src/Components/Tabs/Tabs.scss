@@ -16,6 +16,10 @@ $tab-pad: 5px;
   box-sizing: border-box;
 }
 
+.hide {
+  display: none !important;
+}
+
 .container {
   background: $cnt-bgXX;
 }

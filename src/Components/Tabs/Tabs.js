@@ -20,9 +20,9 @@ function DefaultNewTabPage({uid}) {
     );
 }
 
-function Tab({active, lActive, rActive, onTabClick, i, onXClick, children, ...props}) {
+function Tab({active, lActive, rActive, onTabClick, i, onXClick, children, className, ...props}) {
     return (
-        <span className="Tab" onClick={() => onTabClick(i)} {...props}
+        <span {...props} className={"Tab " + (className ? className : "")} onClick={() => onTabClick(i)}
               active={active ? 1 : undefined} lactive={lActive ? 1 : undefined} ractive={rActive ? 1 : null}>
             {children}
             <code onClick={(e) => onXClick(i) || e.stopPropagation()}>X</code>
@@ -46,6 +46,7 @@ export default class Tabs extends Component {
     constructor(props) {
         super(props);
         this.uid = 0;
+        this.scrollTab = 0;
         this.state = {tabPages: props.tabPages, activeTab: props.activeTab, resize: null};
         this.prefix += uid++;
     }
@@ -74,39 +75,52 @@ export default class Tabs extends Component {
     }
 
     onTabHover = (i, remove) => {
-        let tab = domId(this.prefix + "Tab" + i);
+        let tab = domId(this.prefix + "Tab" + (i - 1));
         if (tab) {
             if (remove) tab.classList.remove("lhover")
             else tab.classList.add("lhover");
         }
     }
 
-    tabScroll = (dir) => {
-        let Tabs = domId(this.prefix + "Tabs");
-        let scrollTimerId = setInterval(() => Tabs.scrollBy(5 * dir, 0), 20);
-        window.addEventListener('mouseup', () => clearInterval(scrollTimerId), {once: true});
+    tabScroll = (dir, vis) => {
+        let TabA, TabB;
+        if (dir > 0) {
+            TabA = domId(this.prefix + "Tab" + this.scrollTab);
+            TabB = domId(this.prefix + "Tab" + (this.scrollTab + vis + 1));
+        } else {
+            TabA = domId(this.prefix + "Tab" + (this.scrollTab + vis));
+            TabB = domId(this.prefix + "Tab" + (this.scrollTab - 1));
+        }
+        if (TabA && TabB) {
+            TabA.classList.add("hide");
+            TabB.classList.remove("hide");
+            this.scrollTab += dir;
+            if (this.scrollTab < 0) this.scrollTab = 0;
+            let tab = domId(this.prefix + "Tab" + -1);
+        }
     }
 
     render() {
         let Tabs = domId(this.prefix + "Tabs"), Tools = domId(this.prefix + "Tools");
         let cntTabs = domId(this.prefix + "container--tabs");
-        let tabsWidth, tabMinWidth, tabsWidthRem;
+        let tabsWidth, tabMinWidth, tabsWidthRem, vis;
         if (Tabs) {
-            let n, full = cntTabs.offsetWidth - Tools.offsetWidth - this.sanityOffset;
+            let full = cntTabs.offsetWidth - Tools.offsetWidth - this.sanityOffset;
             tabMinWidth =
                 Math.min(Math.max(full / this.state.tabPages.length, this.tabsMinWidth), this.tabsMaxWidth);
             tabsWidth =
-                Math.min(tabMinWidth * (n = full / tabMinWidth | 0), tabMinWidth * this.state.tabPages.length);
+                Math.min(tabMinWidth * (vis = full / tabMinWidth | 0), tabMinWidth * this.state.tabPages.length);
             tabsWidthRem = full - tabsWidth;
-            if (n < this.state.tabPages.length) {
-                tabMinWidth += tabsWidthRem / n;
+            if (vis < this.state.tabPages.length) {
+                tabMinWidth += tabsWidthRem / vis;
                 tabsWidth = full;
                 tabsWidthRem = 0;
             }
         }
         let tab_n = 0;
         const tabs = this.state.tabPages.map((page) =>
-            <Tab active={this.state.activeTab === tab_n}
+            <Tab className={tab_n <= this.scrollTab + vis && tab_n >= this.scrollTab ? undefined : "hide"}
+                 active={this.state.activeTab === tab_n}
                  lActive={this.state.activeTab === tab_n - 1}
                  rActive={this.state.activeTab === tab_n + 1}
                  i={tab_n} key={this.state.tabPages[tab_n++].props.uid}
@@ -115,8 +129,9 @@ export default class Tabs extends Component {
                  style={{
                      minWidth: tabMinWidth,
                      maxWidth: this.tabsMaxWidth
-                 }} onMouseEnter={() => this.onTabHover(this.state.tabPages.indexOf(page) - 1)}
-                 onMouseLeave={() => this.onTabHover(this.state.tabPages.indexOf(page) - 1, 1)}>
+                 }}
+                 onMouseEnter={() => this.onTabHover(this.state.tabPages.indexOf(page))}
+                 onMouseLeave={() => this.onTabHover(this.state.tabPages.indexOf(page), 1)}>
                 <span>Tab:{tab_n + 1}</span>
             </Tab>
         );
@@ -124,15 +139,15 @@ export default class Tabs extends Component {
         return (
             <div className="container">
                 <div id={this.prefix + "container--tabs"} className="container--tabs">
-                    <span className="Tab" style={{
+                    <span className="Tools" style={{
                         minWidth: this.sanityOffset,
                         maxWidth: this.sanityOffset,
-                    }} id={this.prefix + "Tab" + -1} ractive={this.state.activeTab === 0 ? 1 : null}/>
+                    }}/>
                     <span id={this.prefix + "Tabs"} className="Tabs" style={{maxWidth: tabsWidth}}>{tabs}</span>
                     <span id={this.prefix + "Tools"} className="Tools">
                         <button className="tool" onClick={this.onNewTabClick}>+</button>
-                        <button className="tool" onMouseDown={() => this.tabScroll(-1)}>{"<"}</button>
-                        <button className="tool" onMouseDown={() => this.tabScroll(+1)}>{">"}</button>
+                        <button className="tool" onMouseDown={() => this.tabScroll(-1, vis)}>{"<"}</button>
+                        <button className="tool" onMouseDown={() => this.tabScroll(+1, vis)}>{">"}</button>
                     </span>
                     <span className="endSpan" style={{maxWidth: tabsWidthRem}}></span>
                 </div>
