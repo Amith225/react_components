@@ -4,6 +4,8 @@ import Tabs from "./Components/Tabs/Tabs";
 import LInp from "./Components/LInp/LInp";
 import {Glass, Circle} from "./Components/Glass/Glass";
 import PyLink from "./Components/PyLink/PyLink";
+import Test from "./Components/Test";
+import DImg from "./Components/DImg/DImg";
 
 function CompRep({label, children}) {
     return (
@@ -99,6 +101,9 @@ function App() {
             </CompRep>
             <CompRep label="Glass">
                 <FooGlass/>
+            </CompRep>
+            <CompRep label="DImg">
+                <DImg/>
             </CompRep>
         </div>
     );
