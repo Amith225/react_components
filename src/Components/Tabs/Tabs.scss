@@ -24,7 +24,7 @@ $tools-pad: 5px;
 
 .container {
   background: $cnt-bg;
-  padding: $cnt-pad;
+  padding-top: $cnt-pad;
 }
 
 .container--tabs {
@@ -38,9 +38,11 @@ $tools-pad: 5px;
 
 .container--page {
   background: $cnt-bgXX;
-  border-radius: $tab-rad;
-  -moz-border-radius: $tab-rad;
-  -webkit-border-radius: $tab-rad;
+  padding: $cnt-pad;
+
+  .page-buffer {
+    height: $cnt-pad;
+  }
 }
 
 .Tabs {

@@ -1,11 +1,11 @@
-$cnt-bg: gray;
+$cnt-bg: purple;
 
 .Glass--cnt {
   position: relative;
   padding: 10px;
   background: $cnt-bg;
-  z-index: -2;
   overflow: hidden;
+  z-index: 0;
 }
 
 .Glass {

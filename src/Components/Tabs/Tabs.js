@@ -36,8 +36,8 @@ export default class Tabs extends Component {
     constructor(props) {
         super(props);
         this.uid = 0;
-        this.scrollTab = 0;
-        this.vis = 1;
+        this.vis = this.props.tabPages.length;
+        this.scrollTab = this.vis - 1;
         this.state = {tabPages: props.tabPages, activeTab: props.activeTab, resize: null};
         this.prefix += guid++;
     }
@@ -45,6 +45,7 @@ export default class Tabs extends Component {
     componentDidMount() {
         if (this.state.tabPages.length === 0) this.onNewTabClick();
         window.addEventListener('resize', () => this.setState({resize: null}));
+        this.setState({resize: true});
     }
 
     onTabClick = (i) => {
@@ -52,28 +53,21 @@ export default class Tabs extends Component {
     }
 
     onNewTabClick = () => {
+        const tabPages = [...this.state.tabPages, <this.props.newTabPage uid={this.uid++}/>];
         this.scrollTab = this.state.tabPages.length;
-        this.setState({
-            tabPages: [...this.state.tabPages, <this.props.newTabPage uid={this.uid++}/>],
-            activeTab: this.state.tabPages.length
-        });
+        this.setState({tabPages: tabPages, activeTab: this.state.tabPages.length});
     }
 
     onXClick = (i) => {
         const tabPages = [...this.state.tabPages.slice(0, i), ...this.state.tabPages.slice(i + 1)];
-        if (i === this.state.activeTab) {
-            this.scrollTab -= 1;
-            this.setState({
-                tabPages: tabPages,
-                activeTab: i === tabPages ? i - 2 : i - 1,
-            });
-        } else {
-            if (this.scrollTab === tabPages.length) this.scrollTab -= 1;
-            this.setState({
-                    tabPages: tabPages
-                }
-            );
-        }
+        const activeTab = i === this.state.activeTab ?
+            (i === tabPages.length ? i - 1 : i) :
+            (i > this.state.activeTab ? this.state.activeTab : this.state.activeTab - 1);
+        this.scrollTab = Math.min(
+            Math.max(activeTab + (this.scrollTab - this.state.activeTab), this.vis - 1),
+            tabPages.length - 1
+        );
+        this.setState({tabPages: tabPages, activeTab: activeTab});
     }
 
     getTabs = (tabMinWidth) => (
@@ -92,7 +86,6 @@ export default class Tabs extends Component {
                     <span>Tab:{i}</span>
                     <code visible={this.state.tabPages.length !== 1 ? 1 : 0} onClick={(e) => {
                         this.onXClick(i);
-                        this.tabScroll(0);
                         e.stopPropagation();
                     }}>X</code>
                 </Tab>
@@ -122,7 +115,7 @@ export default class Tabs extends Component {
         }
     }
 
-    render() {
+    responsiveTabs = () => {
         let Tabs = domId(this.prefix + "Tabs"), Tools = domId(this.prefix + "Tools");
         let cntTabs = domId(this.prefix + "container--tabs");
         let tabsWidth, tabMinWidth, tabsWidthRem;
@@ -144,6 +137,11 @@ export default class Tabs extends Component {
             domId(this.prefix + "tool>").setAttribute("disable",
                 this.scrollTab + 1 === this.state.tabPages.length ? "1" : "0");
         }
+        return {tabsWidth, tabMinWidth, tabsWidthRem};
+    }
+
+    render() {
+        const {tabsWidth, tabMinWidth, tabsWidthRem} = this.responsiveTabs();
         const tabs = this.getTabs(tabMinWidth);
         return (
             <div className="container">
@@ -160,6 +158,7 @@ export default class Tabs extends Component {
                     </div>
                 </div>
                 <div className="container--page">
+                    <div className={"page-buffer"}/>
                     {this.state.tabPages.map((page) =>
                         <div key={page.props.uid}
                              style={{

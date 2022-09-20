@@ -13,7 +13,7 @@
 
 .container {
   background: gray;
-  padding: 5px;
+  padding-top: 5px;
 }
 
 .container--tabs {
@@ -27,9 +27,10 @@
 
 .container--page {
   background: #bfbfbf;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
+  padding: 5px;
+}
+.container--page .page-buffer {
+  height: 5px;
 }
 
 .Tabs {

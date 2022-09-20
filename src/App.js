@@ -20,7 +20,7 @@ function CompRep({label, children}) {
 
 function FooLInp() {
     return (
-        <div style={{padding: "10px"}}>
+        <div style={{background: "#bfbfbf", padding: "10px"}}>
             <LInp type="number" labelMap={val => <span>Number : {val}</span>}/><br/>
             <LInp type="range" min={0} max={28 * 2 + 1} value={0}
                   labelMap={val => <span>Range : {String.fromCharCode(65 + val)}</span>}/><br/>
@@ -73,6 +73,7 @@ function App() {
             </CompRep>
             <CompRep label="PyLink">
                 <PyLink noSetupOnLoad={true}/>
+                {/*<PyLink/>*/}
             </CompRep>
             <CompRep label="Glass">
                 <FooGlass/>
@@ -80,6 +81,10 @@ function App() {
             <CompRep label="DImg">
                 <DImg/>
             </CompRep>
+
+            {/*<CompRep label="Test">*/}
+            {/*    <Test/>*/}
+            {/*</CompRep>*/}
         </div>
     );
 }
