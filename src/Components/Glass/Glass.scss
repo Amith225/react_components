@@ -5,6 +5,7 @@ $cnt-bg: gray;
   padding: 10px;
   background: $cnt-bg;
   z-index: -2;
+  overflow: hidden;
 }
 
 .Glass {
@@ -15,7 +16,7 @@ $cnt-bg: gray;
   border-radius: 10px;
 }
 
-.Glass-bg {
+.Glass-back {
   position: absolute;
   padding: 10px;
   top: 0;

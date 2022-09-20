@@ -13,7 +13,7 @@ export default class PyLink extends Component {
         this.state = {doneSetup: false};
     }
 
-    async componentDidMount() {
+    async setup() {
         let ts = Date.now();
         this.pyLink = await window.loadPyodide({
             indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.2/full"
@@ -25,6 +25,11 @@ export default class PyLink extends Component {
         console.log("PyLink Setup Complete", ts, "ms");
         this.setState({doneSetup: true});
     }
+
+    componentDidMount() {
+        if (!this.props.noSetupOnLoad) this.setup().then();
+    }
+
 
     runScript(script) {
         this.pyLink.runPython(script);

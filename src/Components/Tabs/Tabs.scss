@@ -94,7 +94,7 @@ $tools-pad: 5px;
     &:not([active="1"], :hover):after {
       content: "";
       position: absolute;
-      right: -1px;
+      right: -2px;
       bottom: 25%;
       height: 50%;
       width: 1px;
@@ -118,6 +118,7 @@ $tools-pad: 5px;
 }
 
 .Tools {
+  min-width: fit-content;
   display: flex;
   padding: $tools-pad;
 

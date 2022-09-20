@@ -1,55 +1,47 @@
 import './Linp.css';
-import {Component} from "react";
+import {useState} from "react";
 
-let uid = 0;
+let guid = 0;
 
-export default class LInp extends Component {
-    prefix = "LInpUIdPrefix--some-string-to-make-this-difficult-to-clash-with-user-defined-id";
-    noVals = ['', NaN, null, undefined];
-    static defaultProps = {
-        onInputBefore: () => null,
-        onInput: () => null,
-        labelMap: () => '',
-        labelProps: {},
-        inputProps: {},
-        LInpProps: {},
-        type: 'text',
-        min: undefined,
-        max: undefined,
-        value: '',
-    };
+export default function LInp
+    ({
+         onInputBefore = () => null,
+         onInput = () => null,
+         labelMap = () => '',
+         labelProps = {},
+         inputProps = {},
+         LInpProps = {},
+         type = 'text',
+         min = undefined,
+         max = undefined,
+         value = '',
+     }) {
+    const prefix = "LInpUIdPrefix--some-string-to-make-this-difficult-to-clash-with-user-defined-id" + guid++;
+    const noVals = ['', NaN, null, undefined];
+    const [value_, setValue] = useState(value);
 
-    constructor(props) {
-        super(props);
-        this.state = {value: props.value};
-        this.prefix += uid++;
-    }
-
-    onInput = (e) => {
-        this.props.onInputBefore(e);
+    function onInput_(e) {
+        onInputBefore(e);
         if (e.isPropagationStopped()) return;
-        const [val, min, max] = ["number", "range"].includes(this.props.type) ?
-            [parseInt(e.target.value), parseInt(this.props.min), parseInt(this.props.max)] :
-            [e.target.value, this.props.min, this.props.max];
+        const [val, min_, max_] = ["number", "range"].includes(type) ?
+            [parseInt(e.target.value), parseInt(min), parseInt(max)] :
+            [e.target.value, min, max];
         let _val = val;
-        const noVal = this.noVals.includes(val);
-        if (noVal) _val = this.props.value;
-        if (noVal || ((this.noVals.includes(min) || min <= val) && (this.noVals.includes(max) || val <= max)))
-            this.setState({value: _val});
-        else _val = this.state.value;
+        const noVal = noVals.includes(val);
+        if (noVal) _val = value_;
+        if (noVal || ((noVals.includes(min_) || min_ <= val) && (noVals.includes(max_) || val <= max_))) setValue(_val);
+        else _val = value_;
         e.target.value = _val;
-        this.props.onInput(e);
+        onInput(e);
     }
 
-    render() {
-        const Tag = this.props.type !== "textBox" ? "input" : "textarea";
-        const text = this.props.labelMap(this.state.value)
-        return (
-            <div {...this.props.LInpProps} className="LInp">
-                <label {...this.props.labelProps} htmlFor={this.prefix}>{text}</label>
-                <Tag value={this.state.value} type={this.props.type} onInput={this.onInput} wrap="off"
-                       id={this.prefix} {...this.props.inputProps} min={this.props.min} max={this.props.max}/>
-            </div>
-        );
-    }
+    const Tag = type !== "textBox" ? "input" : "textarea";
+    const text = labelMap(value_)
+    return (
+        <div {...LInpProps} className="LInp">
+            <label {...labelProps} htmlFor={prefix}>{text}</label>
+            <Tag value={value_} type={type} onInput={onInput_} wrap="off"
+                 id={prefix} {...inputProps} min={min} max={max}/>
+        </div>
+    );
 }

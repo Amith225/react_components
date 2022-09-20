@@ -20,7 +20,7 @@ function CompRep({label, children}) {
 
 function FooLInp() {
     return (
-        <div style={{background: "gray", padding: "10px"}}>
+        <div style={{padding: "10px"}}>
             <LInp type="number" labelMap={val => <span>Number : {val}</span>}/><br/>
             <LInp type="range" min={0} max={28 * 2 + 1} value={0}
                   labelMap={val => <span>Range : {String.fromCharCode(65 + val)}</span>}/><br/>
@@ -36,43 +36,18 @@ function FooLInp() {
 function FooGlass() {
     const bg =
         <>
-            <Circle
-                style={{
-                    background: "red",
-                    width: "80px",
-                    height: "80px",
-                    top: "100px",
-                    left: "30px"
-                }}/>
-            <Circle
-                style={{
-                    background: "green",
-                    width: "40px",
-                    height: "40px",
-                    top: "150px",
-                    left: "200px"
-                }}/>
-            <Circle
-                style={{
-                    background: "blue",
-                    width: "150px",
-                    height: "130px",
-                    top: "180px",
-                    left: "70px"
-                }}/>
-            <Circle
-                style={{
-                    background: "gold",
-                    width: "80px",
-                    height: "80px",
-                    top: "50px",
-                    left: "300px"
-                }}/>
+            <Circle bg="red" w={80} h={80} x={30} y={100}/>
+            <Circle bg="green" w={40} h={40} x={200} y={150}/>
+            <Circle bg="blue" w={150} h={130} x={70} y={180}/>
+            <Circle bg="gold" w={80} h={80} x={300} y={50}/>
+            <Circle bg="pink" w={50} h={60} x={140} y="10%">
+                <Circle bg="red" w={25} h={30} x="25%" y="25%"/>
+            </Circle>
         </>
     return (
         <Glass
-            bg={bg}
-            style={{width: "400px", height: "300px"}}>
+            back={bg}
+            style={{maxWidth: "400px", minHeight: "300px"}}>
             <p style={{padding: "10px"}}>
                 Glass morphism is a new design trend that is currently very popular.<br/>
                 Essentially, the main aspect of this trend is a semi-transparent background, with a sublime
@@ -93,18 +68,18 @@ function App() {
             <CompRep label="Tabs">
                 <Tabs/>
             </CompRep>
-            <CompRep label="LInp">
-                <FooLInp/>
-            </CompRep>
-            <CompRep label="PyLink">
-                <PyLink/>
-            </CompRep>
-            <CompRep label="Glass">
-                <FooGlass/>
-            </CompRep>
-            <CompRep label="DImg">
-                <DImg/>
-            </CompRep>
+            {/*<CompRep label="LInp">*/}
+            {/*    <FooLInp/>*/}
+            {/*</CompRep>*/}
+            {/*<CompRep label="PyLink">*/}
+            {/*    <PyLink noSetupOnLoad={true}/>*/}
+            {/*</CompRep>*/}
+            {/*<CompRep label="Glass">*/}
+            {/*    <FooGlass/>*/}
+            {/*</CompRep>*/}
+            {/*<CompRep label="DImg">*/}
+            {/*    <DImg/>*/}
+            {/*</CompRep>*/}
         </div>
     );
 }

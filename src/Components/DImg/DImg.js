@@ -3,8 +3,8 @@ import {Component, createRef} from "react";
 
 export default class DImg extends Component {
     static defaultProps = {
-        width: 500,
-        height: 500
+        width: 250,
+        height: 250
     }
 
     constructor(props) {
@@ -17,8 +17,8 @@ export default class DImg extends Component {
         this.context = this.canvasRef.current.getContext('2d');
     }
 
-    changeImgArr = (arr) => {
-        arr = arr.map(e => new Array(10).fill(e.map(ee => new Array(10).fill(ee)).flat())).flat();
+    changeImgArr = (arr, exp = 1) => {
+        arr = arr.map(e => new Array(exp).fill(e.map(ee => new Array(exp).fill(ee)).flat())).flat();
         let h = arr.length, w = arr[0].length;
         arr = arr.flat().flat();
         const img = new ImageData(Uint8ClampedArray.from(arr), w, h);
@@ -35,9 +35,9 @@ export default class DImg extends Component {
 
         return (
             <>
-                <canvas ref={this.canvasRef} height={this.props.height} width={this.props.width}/>
+                <canvas className="Canvas" ref={this.canvasRef} height={this.props.height} width={this.props.width}/>
                 <br/>
-                <button onClick={() => this.changeImgArr(rndArr(50, 50))}>Change Img</button>
+                <button onClick={() => this.changeImgArr(rndArr(50, 50), 5)}>Change Img</button>
             </>
         );
     }

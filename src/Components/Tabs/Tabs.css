@@ -78,7 +78,7 @@
 .Tabs .Tab:not([active="1"], :hover):after {
   content: "";
   position: absolute;
-  right: -1px;
+  right: -2px;
   bottom: 25%;
   height: 50%;
   width: 1px;
@@ -98,6 +98,7 @@
 }
 
 .Tools {
+  min-width: fit-content;
   display: flex;
   padding: 5px;
 }

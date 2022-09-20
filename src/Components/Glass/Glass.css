@@ -3,6 +3,7 @@
   padding: 10px;
   background: gray;
   z-index: -2;
+  overflow: hidden;
 }
 
 .Glass {
@@ -13,7 +14,7 @@
   border-radius: 10px;
 }
 
-.Glass-bg {
+.Glass-back {
   position: absolute;
   padding: 10px;
   top: 0;
