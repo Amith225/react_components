@@ -68,18 +68,18 @@ function App() {
             <CompRep label="Tabs">
                 <Tabs/>
             </CompRep>
-            {/*<CompRep label="LInp">*/}
-            {/*    <FooLInp/>*/}
-            {/*</CompRep>*/}
-            {/*<CompRep label="PyLink">*/}
-            {/*    <PyLink noSetupOnLoad={true}/>*/}
-            {/*</CompRep>*/}
-            {/*<CompRep label="Glass">*/}
-            {/*    <FooGlass/>*/}
-            {/*</CompRep>*/}
-            {/*<CompRep label="DImg">*/}
-            {/*    <DImg/>*/}
-            {/*</CompRep>*/}
+            <CompRep label="LInp">
+                <FooLInp/>
+            </CompRep>
+            <CompRep label="PyLink">
+                <PyLink noSetupOnLoad={true}/>
+            </CompRep>
+            <CompRep label="Glass">
+                <FooGlass/>
+            </CompRep>
+            <CompRep label="DImg">
+                <DImg/>
+            </CompRep>
         </div>
     );
 }
