@@ -72,7 +72,6 @@ function App() {
                 <FooLInp/>
             </CompRep>
             <CompRep label="PyLink">
-                <PyLink noSetupOnLoad={false}/>
                 <PyLink/>
             </CompRep>
             <CompRep label="Glass">

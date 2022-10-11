@@ -1,7 +1,7 @@
 .Glass--cnt {
   position: relative;
   padding: 10px;
-  background: purple;
+  background: #a865a8;
   overflow: hidden;
   z-index: 0;
 }
@@ -9,7 +9,7 @@
 .Glass {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: inset 0 0 40px 5px rgba(255, 255, 255, 0.3), 0 0 20px 5px rgba(128, 0, 128, 0.5);
+  box-shadow: inset 0 0 40px 5px rgba(255, 255, 255, 0.3), 0 0 20px 5px rgba(168, 101, 168, 0.5);
   backdrop-filter: blur(8px);
   border-radius: 10px;
 }

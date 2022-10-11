@@ -5,7 +5,8 @@ import "https://cdn.jsdelivr.net/pyodide/v0.21.2/full/pyodide.js";
 
 export default class PyLink extends Component {
     static defaultProps = {
-        pkgs: []
+        pkgs: [],
+        noSetupOnLoad: false
     }
 
     constructor(props) {
@@ -67,9 +68,9 @@ export default class PyLink extends Component {
                 <button onClick={() => this.getFoo("fooPrint")()}>console log from python</button>
                 <br/>
                 <button onClick={() => this.getFoo("fooArgsNoReturn")({
-                        args: [420, 69.69, "Foo wo", true, null, undefined, NaN],
+                        args: [73, 73.73, "Foo wo", true, null, undefined, NaN],
                         kwargs: {
-                            list: [1, 1.1, "loo", false],
+                            list: [1, 1.1, "foo", false],
                             dict: {"m1": 1, "m2": 2.2, "m3": "moo", "m4": null},
                             num: 73,
                         }
@@ -79,7 +80,7 @@ export default class PyLink extends Component {
                 </button>
                 <br/>
                 <button onClick={() => this.getFoo("fooWithReturn")({
-                        args: [420, 69.69, "Foo wo", true, null, undefined, NaN],
+                        args: [73.73, 73.73, "Foo wo", true, null, undefined, NaN],
                         kwargs: {
                             list: [1, 1.1, "loo", false],
                             dict: {"m1": 1, "m2": 2.2, "m3": "moo", "m4": null},
