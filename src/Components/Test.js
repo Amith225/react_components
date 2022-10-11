@@ -1,43 +1,48 @@
 import './Table.css';
 
-function Table({children}) {
-    let rows = 0, columns = 0;
+function Table({children, widths=[50, 30]}) {
+    let newChildren = [];
     for (let row of children) {
         if (row.type === TableRow) {
-            let length = 0
-            for (let cell of row.props.children) if (cell.type === TableCell) length++;
-            if (length > columns) columns = length;
-            rows++;
+            row = <row.type {...row.props} widths={widths}/>
         }
+        newChildren.push(row);
     }
-    console.log(rows, columns)
     return (
-        <div className="Table" rows={rows} columns={columns}>
+        <div className="Table">
+            {newChildren}
+        </div>
+    );
+}
+
+function TableRow({children, widths}) {
+    let newChildren = [], i = 0;
+    for (let cell of children) {
+        if (cell.type === TableCell) {
+            cell = <cell.type {...cell.props} width={i < widths.length ? widths[i] : widths[widths.length - 1]}/>
+        }
+        newChildren.push(cell)
+        i++;
+    }
+    return (
+        <span className="Table--Row">
+            {newChildren}
+        </span>
+    );
+}
+
+function TableCell({children, width}) {
+    return (
+        <div className="Table--Cell" style={{width: width}}>
             {children}
         </div>
     );
 }
 
-function TableRow({children}) {
-    return (
-        <span className="Table--Row">
-            {children}
-        </span>
-    );
-}
-
-function TableCell({children}) {
-    return (
-        <span className="Table--Cell">
-            {children}
-        </span>
-    );
-}
-
 export default function Test() {
     const table = createData(
-        createData(0, 0, 0, 0, 0),
-        createData(11111, 1, 1, 1, 1),
+        createData("...", 0, 0, 0, 0),
+        createData(1, 1, 1, 1, 1),
         createData(2, 2, 2, 2, 2),
         createData(3, 3, 3, 3, 3),
         createData(4, 4, 4, 4, 4),
