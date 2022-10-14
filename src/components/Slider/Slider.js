@@ -21,7 +21,10 @@ export default function Slider({imgs, auto = 5000}) {
     useEffect(() => {
         if (auto) {
             intervalId = setInterval(() => inc(1, true), auto);
-            return () => clearInterval(intervalId);
+            return () => {
+                console.log(intervalId)
+                clearInterval(intervalId)
+            };
         }
     }, []);
     return (

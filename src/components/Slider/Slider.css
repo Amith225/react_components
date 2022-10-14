@@ -1,0 +1,46 @@
+.Slider--cnt {
+  position: relative;
+  width: 700px;
+}
+.Slider--cnt .left {
+  top: calc(50% - 1em);
+  position: absolute;
+  font-size: 2em;
+  font-weight: 1000;
+  color: #282828;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+  cursor: pointer;
+  left: 0;
+}
+.Slider--cnt .right {
+  top: calc(50% - 1em);
+  position: absolute;
+  font-size: 2em;
+  font-weight: 1000;
+  color: #282828;
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+  cursor: pointer;
+  right: 0;
+}
+
+.Slider {
+  display: flex;
+  margin-inline: auto;
+  width: fit-content;
+}
+.Slider .Img {
+  height: 20em;
+  border-radius: 1em;
+}
+.Slider .Img[active="0"] {
+  opacity: 0;
+  width: 0;
+  transition: all 1s;
+}
+.Slider .Img[active="1"] {
+  opacity: initial;
+  width: initial;
+  transition: all 1s;
+}
+
+/*# sourceMappingURL=Slider.css.map */
