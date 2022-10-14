@@ -1,11 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
-import Tabs from "./Components/Tabs/Tabs";
-import LInp from "./Components/LInp/LInp";
-import {Glass, Circle} from "./Components/Glass/Glass";
-import PyLink from "./Components/PyLink/PyLink";
-import Test from "./Components/Test";
-import DImg from "./Components/DImg/DImg";
+import Tabs from "./components/Tabs/Tabs";
+import LInp from "./components/LInp/LInp";
+import {Glass, Circle} from "./components/Glass/Glass";
+import PyLink from "./components/PyLink/PyLink";
+import Test from "./components/Test";
+import DImg from "./components/DImg/DImg";
+import Slider from "./components/Slider/Slider";
+
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => {
+        images[item.replace('./', '')] = r(item);
+    });
+    return images;
+}
+
+const images = importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/));
 
 function CompRep({label, children}) {
     return (
@@ -65,6 +76,7 @@ function App() {
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
             </header>
+
             <CompRep label="Tabs">
                 <Tabs/>
             </CompRep>
@@ -79,6 +91,9 @@ function App() {
             </CompRep>
             <CompRep label="DImg">
                 <DImg/>
+            </CompRep>
+            <CompRep label="Slider">
+                <Slider imgs={Object.values(images)}/>
             </CompRep>
 
             {/*<CompRep label="Test">*/}

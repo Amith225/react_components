@@ -1,0 +1,48 @@
+@mixin arrow {
+  top: calc(50% - 1em);
+  position: absolute;
+  font-size: 2em;
+  font-weight: 1000;
+  color: #282828;
+  text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+  cursor: pointer;
+}
+
+.Slider--cnt {
+  position: relative;
+  //margin-inline: auto;
+  width: 700px;
+
+  .left {
+    @include arrow();
+    left: 0;
+  }
+
+  .right {
+    @include arrow();
+    right: 0;
+  }
+}
+
+.Slider {
+  display: flex;
+  margin-inline: auto;
+  width: fit-content;
+
+  .Img {
+    height: 20em;
+    border-radius: 1em;
+
+    &[active="0"] {
+      opacity: 0;
+      width: 0;
+      transition: all 1s;
+    }
+
+    &[active="1"] {
+      opacity: initial;
+      width: initial;
+      transition: all 1s;
+    }
+  }
+}
