@@ -1,17 +1,20 @@
+$height: 20em;
+$width: 36em;
+
 @mixin arrow {
   top: calc(50% - 1em);
   position: absolute;
   font-size: 2em;
   font-weight: 1000;
   color: #282828;
-  text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+  text-shadow: rgba(255, 255, 255) 0 0 3px;
   cursor: pointer;
 }
 
 .Slider--cnt {
   position: relative;
   //margin-inline: auto;
-  width: 700px;
+  width: min($width, 100%);
 
   .left {
     @include arrow();
@@ -30,7 +33,8 @@
   width: fit-content;
 
   .Img {
-    height: 20em;
+    max-width: 100%;
+    height: $height;
     border-radius: 1em;
 
     &[active="0"] {
