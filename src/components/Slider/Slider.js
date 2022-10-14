@@ -1,9 +1,9 @@
-import './Slider.css'
+import './Slider.css';
 import {useEffect, useState} from "react";
 
 export default function Slider({imgs, auto = 5000}) {
     const [curr, setCurr] = useState(0);
-    let intervalId;
+    const [intervalId, setIntervalId] = useState(-1);
 
     function inc(val, byAuto = false) {
         setCurr(curr => {
@@ -13,20 +13,19 @@ export default function Slider({imgs, auto = 5000}) {
             return curr;
         });
         if (!byAuto) {
-            clearInterval(intervalId)
-            intervalId = setInterval(() => inc(1, true), auto);
+            clearInterval(intervalId);
+            setIntervalId(setInterval(() => inc(1, true), auto));
         }
     }
 
     useEffect(() => {
         if (auto) {
-            intervalId = setInterval(() => inc(1, true), auto);
-            return () => {
-                console.log(intervalId)
-                clearInterval(intervalId)
-            };
+            let intId = setInterval(() => inc(1, true), auto);
+            setIntervalId(intId);
+            return () => clearInterval(intId);
         }
     }, []);
+
     return (
         <div className="Slider--cnt">
             <div className="Slider">
